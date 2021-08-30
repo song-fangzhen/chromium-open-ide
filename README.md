@@ -9,11 +9,8 @@
 
 ## Installation
 
-1. Install the [Chrome Extension](https://github.com/song-fangzhen/chromium-open-ide/releases/tag/v1.1) and related [VScode Extension](https://marketplace.visualstudio.com/items?itemName=FangzhenSong.chromium-source-opener).
-2. Install dependencies `pip install bottle sh`, you may need to install 
-   `python` and `python-pip` if you don't have `pip`.
-3. Create a `myeditor` executable to be used for launching your editor, and add 
-   it to your path. See [`myeditor-example/`](https://chromium.googlesource.com/chromium/src.git/+/main/tools/chrome_extensions/open_my_editor/myeditor-example/).
+Install the [Chrome Extension](https://github.com/song-fangzhen/chromium-open-ide/releases/tag/v1.1) and related [VScode Extension](https://marketplace.visualstudio.com/items?itemName=FangzhenSong.chromium-source-opener).
+
 ## Usage
 
 - For [Chromium Code Search](https://source.chromium.org), right click on code block and select `Open My Editor`, 
