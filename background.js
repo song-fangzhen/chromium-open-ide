@@ -84,9 +84,13 @@ function RequestOpen(url) {
 	console.log("send", handler)
 	let param = Json2Get(handler)
 	console.log(param)
-	let reqUrl = "http://127.0.0.1:8989/file?" + param
-	fetch(reqUrl).catch((err) => {
-		console.log("err: ", err)
+	let reqUrl = "http://127.0.0.1:8989/file?" + param;
+	fetch(reqUrl)
+	.then((response) => {
+		console.log("Response: ", response);
+	})
+	.catch((error) => {
+		console.log("Error: ", error);
 	})
 }
 
