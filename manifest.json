@@ -9,7 +9,7 @@
         "scripting"
     ],
     "action": {
-				"default_icon": "images/COI-Icon.png",
+        "default_icon": "images/COI-Icon.png",
         "default_title": "COI"
     },
     "background": {
@@ -18,7 +18,7 @@
     "host_permissions": [
         "http://127.0.0.1:8989/*",
         "https://source.chromium.org/*",
-				"https://chromium-review.googlesource.com/*"
+		"https://chromium-review.googlesource.com/*"
     ],
 		"icons": {
     		"16": "images/COI-Icon.png",
@@ -27,4 +27,3 @@
    		 	"128": "images/COI-Icon.png"
  		 }
 }
-
