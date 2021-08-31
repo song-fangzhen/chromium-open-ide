@@ -100,9 +100,12 @@ chrome.runtime.onInstalled.addListener((_) => {
 		title: 'Open in Editor',
 		contexts: ['link', 'selection']
 	});
+
+	// This will installed when service worker is active. [first]
+	chrome.contextMenus.onClicked.addListener(handleContextMenusClick);
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+function handleContextMenusClick(info, tab) {
 	switch (info.menuItemId) {
 		case 'open_in_editor':
 			let url = info.linkUrl;
@@ -110,9 +113,12 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 				url = info.pageUrl;
 			}
 			if (url) {
-				console.log(url, "start open")
-				RequestOpen(url)
+				console.log(url, "start open");
+				RequestOpen(url);
 			}
 			break;
 	};
-});
+}
+
+// This will get triggered when service worker is inactive. [slow]
+chrome.contextMenus.onClicked.addListener(handleContextMenusClick);
