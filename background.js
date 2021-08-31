@@ -94,17 +94,6 @@ function RequestOpen(url) {
 	});
 };
 
-chrome.runtime.onInstalled.addListener((_) => {
-	chrome.contextMenus.create({
-		id: 'open_in_editor',
-		title: 'Open in Editor',
-		contexts: ['link', 'selection']
-	});
-
-	// This will installed when service worker is active. [first]
-	chrome.contextMenus.onClicked.addListener(handleContextMenusClick);
-});
-
 function handleContextMenusClick(info, tab) {
 	switch (info.menuItemId) {
 		case 'open_in_editor':
@@ -119,6 +108,17 @@ function handleContextMenusClick(info, tab) {
 			break;
 	};
 }
+
+chrome.runtime.onInstalled.addListener((_) => {
+	chrome.contextMenus.create({
+		id: 'open_in_editor',
+		title: 'Open in Editor',
+		contexts: ['link', 'selection']
+	});
+
+	// This will get triggered when service worker is active. [fast]
+	chrome.contextMenus.onClicked.addListener(handleContextMenusClick);
+});
 
 // This will get triggered when service worker is inactive. [slow]
 chrome.contextMenus.onClicked.addListener(handleContextMenusClick);
