@@ -43,7 +43,34 @@ class GerritHandler {
 			return;
 		}
 		
-		let file = chunk.substr(indexOfSecond + 1);
+		let file = url.split('#')[0];
+		if (!file) return;
+
+		// Get the line number.
+		let line = url.split('#')[1];
+		if (line) {
+			// If chose from left diff view on Gerrit, there will be a 'b' in 
+			// the line number which should get removed.
+			line = line.replace('b', '');
+		} else {
+			// Default to open and locate at the first line.
+			line = '1';
+		}
+
+		this.file = file;
+		this.line = line;
+		this.success = true;
+	}
+}
+
+class GoogleGitHandler {
+	// https://chromium.googlesource.com/chromium/src/+/HEAD/chrome/browser/extensions/app_process_apitest.cc#291
+	constructor(url) {
+		this.url = url;
+		url = url.replace('https://chromium.googlesource.com/chromium/src/+/HEAD/', '');
+
+		// Get the file path
+		let file = url.split('#')[0];
 		if (!file) return;
 
 		// Get the line number.
@@ -68,6 +95,8 @@ function GetHandler(url) {
 		return GerritHandler;
 	} else if (url.startsWith('https://source.chromium.org/')) {
 		return ChromiumHandler;
+	} else if (url.startsWith('https://chromium.googlesource.com/')) {
+		return GoogleGitHandler;
 	}
 }
 
