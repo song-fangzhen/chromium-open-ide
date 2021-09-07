@@ -4,8 +4,9 @@
 [![Bors enabled](https://img.shields.io/badge/bors-enabled-brightgreen)](https://app.bors.tech/repositories/23758)
 
 `COI` gives you a context menu for opening files in your editor (`VSCode`) on
-[Chromium Code Search](https://source.chromium.org) and
-[Chromium Code Review](https://chromium-review.googlesource.com).
+[Chromium Code Search](https://source.chromium.org),
+[Chromium Code Review](https://chromium-review.googlesource.com) and
+[Google Git](https://chromium.googlesource.com).
 
 ## Installation
 

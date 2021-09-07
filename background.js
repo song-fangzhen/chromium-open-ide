@@ -1,3 +1,26 @@
+class ChromiumHandler {
+	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
+	constructor(url) {
+		this.url = url;
+		url = url.replace('https://source.chromium.org/chromium', '');
+		url = url.split(':')[1];
+		if (!url) return;
+
+		// Get the file path
+		let file = url.split(';')[0];
+		if (!file) return;
+
+		// Get the line number
+		let line = url.split(';l=')[1].split(';')[0].split('?')[0];
+		if (!line)
+			line = '1';
+
+		this.file = file;
+		this.line = line;
+		this.success = true;
+	}
+}
+
 class GerritHandler {
 	// https://chromium-review.googlesource.com/c/chromium/src/+/3086892/10/chrome/browser/sync/test/integration/two_client_web_apps_bmo_sync_test.cc#646
 	constructor(url) {
@@ -40,37 +63,24 @@ class GerritHandler {
 	}
 }
 
-class ChromiumHandler {
-	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
-	constructor(url) {
-		this.url = url;
-		url = url.replace('https://source.chromium.org/chromium', '');
-		url = url.split(':')[1];
-		if (!url) return;
-
-		// Get the file path
-		let file = url.split(';')[0];
-		if (!file) return;
-
-		// Get the line number
-		let line = url.split(';l=')[1].split(';')[0].split('?')[0];
-		if (!line)
-			line = '1';
-
-		this.file = file;
-		this.line = line;
-		this.success = true;
-	}
-}
-
 class GoogleGitHandler {
 	// https://chromium.googlesource.com/chromium/src/+/HEAD/chrome/browser/extensions/app_process_apitest.cc#291
 	constructor(url) {
 		this.url = url;
-		url = url.replace('https://chromium.googlesource.com/chromium/src/+/HEAD/', '');
+		url = url.replace('https://chromium.googlesource.com/chromium/src/+/', '');
 
 		// Get the file path
-		let file = url.split('#')[0];
+		const chunk = url.split('#')[0];
+
+		const SEARCH_TERM = '/';
+		let indexOfFirst = chunk.indexOf(SEARCH_TERM);
+		const NOT_FIND = -1;
+		if (indexOfFirst == NOT_FIND) {
+			console.log('First index of' + SEARCH_TERM + ' not find!');
+			return;
+		}
+
+		let file = chunk.substr(indexOfFirst + 1);
 		if (!file) return;
 
 		// Get the line number.
@@ -85,10 +95,10 @@ class GoogleGitHandler {
 }
 
 function GetHandler(url) {
-	if (url.startsWith('https://chromium-review.googlesource.com/')) {
-		return GerritHandler;
-	} else if (url.startsWith('https://source.chromium.org/')) {
+	if (url.startsWith('https://source.chromium.org/')) {
 		return ChromiumHandler;
+	} else if (url.startsWith('https://chromium-review.googlesource.com/')) {
+		return GerritHandler;
 	} else if (url.startsWith('https://chromium.googlesource.com/')) {
 		return GoogleGitHandler;
 	}
