@@ -1,23 +1,45 @@
+const CHROMIUM_HEADER = 'https://source.chromium.org';
+const GERRIT_HEADER = 'https://chromium-review.googlesource.com';
+const GOOGLE_GIT_HEADER = 'https://chromium.googlesource.com';
+
+
 class ChromiumHandler {
 	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
 	constructor(url) {
+		// Default to success.
+		this.success = true;
+
 		this.url = url;
-		url = url.replace('https://source.chromium.org/chromium', '');
-		url = url.split(':')[1];
+		url = url.split(':')[2];
 		if (!url) return;
 
-		// Get the file path
+		// Get the file path.
 		let file = url.split(';')[0];
 		if (!file) return;
-
-		// Get the line number
-		let line = url.split(';l=')[1].split(';')[0].split('?')[0];
-		if (!line)
-			line = '1';
-
 		this.file = file;
+
+		// Get the line number.
+		// Default to the first line.
+		this.line = '1';
+
+		// Case 1: values.h[;bpv=1;bpt=0]
+		let line = url.split(';l=')[1];
+		if (!line) {
+			return;
+		}
+
+		// Case 2: values.h;l=104[;bpv=1;bpt=0]
+		line = line.split(';')[0];
+		if (!line) {
+			return;
+		}
+
+		// Case 3: values.h;l=104[;bpv=1;bpt=0]?q=values&ss=chromium%2Fchromium%2Fsrc
+		line = line.split('?')[0];
+		if (!line) {
+			return;
+		}
 		this.line = line;
-		this.success = true;
 	}
 }
 
@@ -25,7 +47,8 @@ class GerritHandler {
 	// https://chromium-review.googlesource.com/c/chromium/src/+/3086892/10/chrome/browser/sync/test/integration/two_client_web_apps_bmo_sync_test.cc#646
 	constructor(url) {
 		this.url = url;
-		url = url.replace('https://chromium-review.googlesource.com/c/chromium/src/+/', '');
+		url = url.split('/+/')[1];
+		if (!url) return;
 
 		// Get the file path
 		const chunk = url.split('#')[0];
@@ -67,7 +90,8 @@ class GoogleGitHandler {
 	// https://chromium.googlesource.com/chromium/src/+/HEAD/chrome/browser/extensions/app_process_apitest.cc#291
 	constructor(url) {
 		this.url = url;
-		url = url.replace('https://chromium.googlesource.com/chromium/src/+/', '');
+		url = url.split('/+/')[1];
+		if (!url) return;
 
 		// Get the file path
 		const chunk = url.split('#')[0];
@@ -94,14 +118,21 @@ class GoogleGitHandler {
 	}
 }
 
-function GetHandler(url) {
-	if (url.startsWith('https://source.chromium.org/')) {
+function GetHandler(url)  {
+	if (url.startsWith(CHROMIUM_HEADER)) {
 		return ChromiumHandler;
-	} else if (url.startsWith('https://chromium-review.googlesource.com/')) {
+	} 
+	
+	if (url.startsWith(GERRIT_HEADER)) {
 		return GerritHandler;
-	} else if (url.startsWith('https://chromium.googlesource.com/')) {
+	}
+	
+	if (url.startsWith(GOOGLE_GIT_HEADER)) {
 		return GoogleGitHandler;
 	}
+
+	console.log('Not support website: ' + url);
+	return null;
 }
 
 function Json2Get(json){
