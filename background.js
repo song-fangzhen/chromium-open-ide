@@ -1,11 +1,11 @@
 const CHROMIUM_HEADER = 'https://source.chromium.org';
 const GERRIT_HEADER = 'https://chromium-review.googlesource.com';
 const GOOGLE_GIT_HEADER = 'https://chromium.googlesource.com';
-
+const CODE_REVIEWS_HEADER = 'https://chromiumcodereview.appspot.com';
 
 class ChromiumHandler {
 	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
-	constructor(url) {
+	constructor(url, tabTitle) {
 		// Default to success.
 		this.success = true;
 
@@ -15,7 +15,10 @@ class ChromiumHandler {
 
 		// Get the file path.
 		let file = url.split(';')[0];
-		if (!file) return;
+		if (!file) {
+			console.log('Cannot get file path!');
+			return;
+		}
 		this.file = file;
 
 		// Get the line number.
@@ -45,7 +48,7 @@ class ChromiumHandler {
 
 class GerritHandler {
 	// https://chromium-review.googlesource.com/c/chromium/src/+/3086892/10/chrome/browser/sync/test/integration/two_client_web_apps_bmo_sync_test.cc#646
-	constructor(url) {
+	constructor(url, tabTitle) {
 		this.url = url;
 		url = url.split('/+/')[1];
 		if (!url) return;
@@ -88,7 +91,7 @@ class GerritHandler {
 
 class GoogleGitHandler {
 	// https://chromium.googlesource.com/chromium/src/+/HEAD/chrome/browser/extensions/app_process_apitest.cc#291
-	constructor(url) {
+	constructor(url, tabTitle) {
 		this.url = url;
 		url = url.split('/+/')[1];
 		if (!url) return;
@@ -118,6 +121,33 @@ class GoogleGitHandler {
 	}
 }
 
+class CodeReviewsHandler {
+	// https://chromiumcodereview.appspot.com/2433563002/diff/100001/components/sync/protocol/proto_value_conversions.cc
+	constructor(url, tabTitle) {
+		this.url = url;
+		if (!tabTitle) {
+			console.error('Cannot get current Tab Title!');
+			return;
+		}
+
+		// Get the file path.
+		var file = tabTitle.split(' ')[0];
+		if (!file) {
+			console.error('Cannot get file path!');
+			return;
+		}
+		this.file = file;
+
+		// Get the line number.
+		// Default to the first line.
+		this.line = '1';
+
+		this.success = true;
+
+		console.log('Tab Title: ', tabTitle);
+	}
+}
+
 function GetHandler(url)  {
 	if (url.startsWith(CHROMIUM_HEADER)) {
 		return ChromiumHandler;
@@ -131,6 +161,10 @@ function GetHandler(url)  {
 		return GoogleGitHandler;
 	}
 
+	if (url.startsWith(CODE_REVIEWS_HEADER)) {
+		return CodeReviewsHandler;
+	}
+
 	console.log('Not support website: ' + url);
 	return null;
 }
@@ -140,12 +174,12 @@ function Json2Get(json){
 	return str;
 }
 
-function RequestOpen(url) {
+function RequestOpen(url, tabTitle) {
 	let handlerClass = GetHandler(url);
 
 	if (!handlerClass) return;
 
-	let handler = new handlerClass(url);
+	let handler = new handlerClass(url, tabTitle);
 
 	if (!handler || !handler.success) return;
 	console.log('send', handler);
@@ -170,8 +204,10 @@ function handleContextMenusClick(info, tab) {
 			}
 			if (url) {
 				console.log(url, "start open");
-				RequestOpen(url);
+				RequestOpen(url, tab.title);
 			}
+			console.log(info);
+			console.log(tab);
 			break;
 	};
 }
