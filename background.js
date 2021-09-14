@@ -1,7 +1,7 @@
 const CHROMIUM_HEADER = 'https://source.chromium.org';
 const GERRIT_HEADER = 'https://chromium-review.googlesource.com';
 const GOOGLE_GIT_HEADER = 'https://chromium.googlesource.com';
-const CODE_REVIEWS_HEADER = 'https://chromiumcodereview.appspot.com';
+const CODE_REVIEWS_HEADER = 'https://codereview.chromium.org';
 
 class ChromiumHandler {
 	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
