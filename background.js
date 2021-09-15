@@ -2,6 +2,7 @@ const CHROMIUM_HEADER = 'https://source.chromium.org';
 const GERRIT_HEADER = 'https://chromium-review.googlesource.com';
 const GOOGLE_GIT_HEADER = 'https://chromium.googlesource.com';
 const CODE_REVIEWS_HEADER = 'https://codereview.chromium.org';
+const WEBDIFF_HEADER = 'http://localhost';
 
 class ChromiumHandler {
 	// https://source.chromium.org/chromium/chromium/src/+/main:base/values.h;l=104
@@ -148,6 +149,37 @@ class CodeReviewsHandler {
 	}
 }
 
+class WebdiffHandler {
+	// http://localhost:52789/tools/chrome_extensions/open_my_editor/README.md
+	constructor(url, tabTitle) {
+		this.url = url;
+		url = url.split(':')[2];
+		if (!url) return;
+
+		// Get the file path
+		const chunk = url;
+
+		const SEARCH_TERM = '/';
+		let indexOfFirst = chunk.indexOf(SEARCH_TERM);
+		const NOT_FIND = -1;
+		if (indexOfFirst == NOT_FIND) {
+			console.log('First index of' + SEARCH_TERM + ' not find!');
+			return;
+		}
+
+		let file = chunk.substr(indexOfFirst + 1);
+		if (!file) return;
+
+		// Get the line number.
+		// Default to the first line.
+		let line = '1';
+
+		this.file = file;
+		this.line = line;
+		this.success = true;
+	}
+}
+
 function GetHandler(url)  {
 	if (url.startsWith(CHROMIUM_HEADER)) {
 		return ChromiumHandler;
@@ -163,6 +195,10 @@ function GetHandler(url)  {
 
 	if (url.startsWith(CODE_REVIEWS_HEADER)) {
 		return CodeReviewsHandler;
+	}
+
+	if (url.startsWith(WEBDIFF_HEADER)) {
+		return WebdiffHandler;
 	}
 
 	console.log('Not support website: ' + url);

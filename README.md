@@ -1,12 +1,10 @@
 # Chromium Open IDE (COI)
 
-[![.github/workflows/CI.yml](https://img.shields.io/github/workflow/status/EFanZh/Graphviz-Preview/CI/master)](https://github.com/EFanZh/Graphviz-Preview/actions?query=workflow%3A.github%2Fworkflows%2FCI.yml)
-[![Bors enabled](https://img.shields.io/badge/bors-enabled-brightgreen)](https://app.bors.tech/repositories/23758)
-
 `COI` gives you a context menu for opening files in your editor (`VSCode`) on
 [Chromium Code Search](https://source.chromium.org),
-[Chromium Code Review](https://chromium-review.googlesource.com) and
-[Google Git](https://chromium.googlesource.com).
+[Chromium Code Review](https://chromium-review.googlesource.com),
+[Google Git](https://chromium.googlesource.com) and
+[webdiffForCOI](https://pypi.org/project/webdiffForCOI).
 
 ## Installation
 
