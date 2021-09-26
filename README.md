@@ -8,7 +8,10 @@
 
 ## Installation
 
-Install this [MSEdge Extension](https://microsoftedge.microsoft.com/addons/detail/chromium-open-ide/ggfoollpnfolfaejalpiihpobcpbegkl) and related [VSCode Extension](https://marketplace.visualstudio.com/items?itemName=FangzhenSong.chromium-source-opener).
+Install this 
+[Chrome Extension](https://chrome.google.com/webstore/detail/chromium-open-ide/oodolphplfmnljcohclgdikkoljjambi)/
+[MSEdge Extension](https://microsoftedge.microsoft.com/addons/detail/chromium-open-ide/ggfoollpnfolfaejalpiihpobcpbegkl) and related 
+[VSCode Extension](https://marketplace.visualstudio.com/items?itemName=FangzhenSong.chromium-source-opener).
 
 ## Usage
 
