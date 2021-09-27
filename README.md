@@ -1,6 +1,6 @@
 # Chromium Open IDE (COI)
 
-[![CodeQL workflow](https://github.com/song-fangzhen/chromium-source-opener/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/song-fangzhen/chromium-source-opener/actions/workflows/codeql-analysis.yml)
+[![CodeQL workflow](https://github.com/song-fangzhen/chromium-open-ide/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/song-fangzhen/chromium-open-ide/actions/workflows/codeql-analysis.yml)
 [![Bors enabled](https://bors.tech/images/badge_small.svg)](https://app.bors.tech/repositories/37745)
 
 `COI` gives you a context menu for opening files in your editor (`VSCode`) on
