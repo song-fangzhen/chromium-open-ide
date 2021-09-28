@@ -7,7 +7,7 @@
 [Chromium Code Search](https://source.chromium.org),
 [Chromium Gerrit](https://chromium-review.googlesource.com),
 [Google Git](https://chromium.googlesource.com) and
-[webdiffForCOI](https://pypi.org/project/webdiffForCOI).
+[webdiff-for-coi](https://pypi.org/project/webdiff-for-coi).
 
 ## Installation
 
