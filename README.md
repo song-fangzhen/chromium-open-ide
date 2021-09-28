@@ -39,7 +39,7 @@ it will open the file in your editor at the selected line.
 
     <img src="images/COI03.png" onerror="this.onerror=null; this.remove();" alt="COI03.png" width="500"/>
 
-- For [webdiffForCOI](https://pypi.org/project/webdiffForCOI): \
+- For [webdiff-for-coi](https://pypi.org/project/webdiff-for-coi): \
 right-click on code block and select `Open My Editor`,
 it will open the file in your editor.
 
