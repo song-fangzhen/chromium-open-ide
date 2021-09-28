@@ -45,7 +45,7 @@ it will open the file in your editor.
 
     <img src="images/COI04.png" onerror="this.onerror=null; this.remove();" alt="COI04.png" width="500"/>
     
-*Tips: Before using, we should check that have started listening from `VSCode`.*
+*Tips: before using, we should check that have started listening from `VSCode`.*
 
 <img src="images/COI-Tips.png" onerror="this.onerror=null; this.remove();" alt="COI-Tips.png" width="500"/>
 
